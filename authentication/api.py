@@ -4,7 +4,6 @@ from django.conf import settings
 
 from ninja import Router
 from ninja.errors import HttpError
-from ninja_jwt.authentication import JWTAuth
 from ninja_jwt.tokens import RefreshToken
 
 router = Router()
@@ -57,20 +56,21 @@ def kakao_callback(request, code: str):
     user_info = user_response.json()
 
     # 사용자 정보 확인
-    kakao_id = user_info.get("id")
     kakao_email = user_info.get("kakao_account", {}).get("email")
-    kakao_nickname = user_info.get("properties", {}).get("nickname")
+    kakao_name = user_info.get("properties", {}).get("nickname")
 
     # 사용자 생성 또는 확인
-    from django.contrib.auth.models import User
+    from django.contrib.auth import get_user_model
+
+    User = get_user_model()
 
     user, created = User.objects.get_or_create(
-        username=kakao_id,
-        defaults={
-            "email": kakao_email,
-            "first_name": kakao_nickname,
-        },
+        email=kakao_email,
+        defaults={"name": kakao_name},
     )
+
+    if created:
+        user.set_unusable_password()
 
     # JWT 발급
     refresh = RefreshToken.for_user(user)
@@ -78,9 +78,3 @@ def kakao_callback(request, code: str):
         "refresh": str(refresh),
         "access": str(refresh.access_token),
     }
-
-
-@router.get("/protected-endpoint", auth=JWTAuth())
-def protected_endpoint(request):
-    user = request.user
-    return {"message": f"hola, {request.user.first_name}"}

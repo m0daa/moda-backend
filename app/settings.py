@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
+from django.conf.global_settings import AUTH_USER_MODEL
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,6 +43,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "ninja_jwt",
+    "user",
+    "authentication",
+    "curation",
+    "product",
+    "like",
 ]
 
 MIDDLEWARE = [
@@ -126,6 +133,8 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+AUTH_USER_MODEL = "user.CustomUser"
+
 # Django Ninja JWT
 
 NINJA_JWT = {
@@ -133,14 +142,19 @@ NINJA_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-load_dotenv()
+JWT_AUTH = {
+    "JWT_ACCESS_TOKEN_LIFETIME": timedelta(hours=1),  # 액세스 토큰 유효 기간 설정
+    "JWT_REFRESH_TOKEN_LIFETIME": timedelta(days=7),  # 리프레시 토큰 유효 기간 설정
+}
 
 KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token"
 
 KAKAO_USER_INFO_URL = "https://kapi.kakao.com/v2/user/me"
 
+KAKAO_REDIRECT_URI = "http://127.0.0.1:8000/api/v1/auth/kakao/callback/"
+
+load_dotenv()
+
 KAKAO_CLIENT_ID = os.getenv("KAKAO_CLIENT_ID")
 
 KAKAO_CLIENT_SECRET_ID = os.getenv("KAKAO_CLIENT_SECRET_ID")
-
-KAKAO_REDIRECT_URI = "http://127.0.0.1:8000/api/v1/auth/kakao/callback/"
