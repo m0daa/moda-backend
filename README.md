@@ -10,6 +10,12 @@ KAKAO_CLIENT_SECRET_ID=your_kakao_client_secret_id_key
 
 ### API 예시
 
+### 기본 요청
+```
+GET /api/v1/...
+Authorization: Bearer YOUR_JWT_TOKEN
+```
+
 #### Curation
 
 ```
@@ -33,12 +39,12 @@ GET /api/v1/curation?limit=10
     "products": [
       {
         "name": "맨투맨",
-        "price": "50000.00",
+        "price": "50000",
         "image_url": "https://naver.com"
       },
       {
         "name": "청바지",
-        "price": "70000.00",
+        "price": "70000",
         "image_url": "https://naver.com"
       }
     ],
