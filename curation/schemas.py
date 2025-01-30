@@ -8,6 +8,7 @@ class CurationSchema(BaseModel):
     seasons: List[str]
     colors: List[str]
     products: List[Dict[str, str]]
+    likes: int
     created_at: str
 
     class Config:
@@ -28,5 +29,6 @@ class CurationSchema(BaseModel):
                 }
                 for product in obj.products.all()
             ],
+            likes=obj.like_count,
             created_at=obj.created_at.isoformat(),
         )
