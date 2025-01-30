@@ -24,6 +24,7 @@ class CurationSchema(BaseModel):
             products=[
                 {
                     "name": product.name,
+                    "brand": product.brand,
                     "price": str(product.price),
                     "image_url": product.image_url,
                 }

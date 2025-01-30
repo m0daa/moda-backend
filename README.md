@@ -39,11 +39,13 @@ GET /api/v1/curation?limit=10
     "products": [
       {
         "name": "맨투맨",
+        "brand": "스투시",
         "price": "50000",
         "image_url": "https://naver.com"
       },
       {
         "name": "청바지",
+        "brand": "나이키",
         "price": "70000",
         "image_url": "https://naver.com"
       }

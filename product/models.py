@@ -12,6 +12,7 @@ class Product(models.Model):
     ]
 
     name = models.CharField(max_length=100)
+    brand = models.CharField(max_length=100)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
     price = models.IntegerField(default=0)
     image_url = models.URLField()
