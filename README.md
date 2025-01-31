@@ -55,3 +55,13 @@ GET /api/v1/curation?limit=10
   }
 ]
 ```
+
+### 크롤링 예시
+
+#### 무신사
+
+무신사 랭킹 상의, 하의를 크롤링한다
+
+```
+python manage.py crawl_products_from_musinsa
+```
