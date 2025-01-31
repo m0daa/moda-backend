@@ -20,14 +20,32 @@ class Command(BaseCommand):
             return response
 
     def handle(self, *args, **kwargs):
+        outer_url = "https://api.musinsa.com/api2/hm/v2/pans/ranking?storeCode=musinsa&sectionId=200&categoryCode=002000&contentsId=&gf=A"
         top_url = "https://api.musinsa.com/api2/hm/v2/pans/ranking?storeCode=musinsa&sectionId=200&categoryCode=001000&contentsId=&gf=A"
         bottom_url = "https://api.musinsa.com/api2/hm/v2/pans/ranking?storeCode=musinsa&sectionId=200&categoryCode=003000&contentsId=&gf=A"
+        shoes_url = "https://api.musinsa.com/api2/hm/v2/pans/ranking?storeCode=musinsa&sectionId=200&categoryCode=103000&contentsId=&gf=A"
+        bag_url = "https://api.musinsa.com/api2/hm/v2/pans/ranking?storeCode=musinsa&sectionId=200&categoryCode=004000&contentsId=&gf=A"
+        accessories = "https://api.musinsa.com/api2/hm/v2/pans/ranking?storeCode=musinsa&sectionId=200&categoryCode=101000&contentsId=&gf=A"
 
-        loop = asyncio.get_event_loop()
-        tasks = [self.process_data(top_url), self.process_data(bottom_url)]
-        results = loop.run_until_complete(asyncio.gather(*tasks))
+        urls = [top_url, bottom_url, outer_url, shoes_url, bag_url, accessories]
 
-        for response in results:
+        async def crawl():
+            tasks = [self.process_data(url) for url in urls]
+            return await asyncio.gather(*tasks)
+
+        results = asyncio.run(crawl())
+
+        category_map = {
+            top_url: "top",
+            bottom_url: "bottom",
+            outer_url: "outer",
+            shoes_url: "shoes",
+            bag_url: "bag",
+            accessories: "accessories",
+        }
+
+        for url, response in zip(urls, results):
+            category = category_map.get(url, "accessories")
             for i in range(3, 100):
                 for j in range(0, 3):
                     item = response["data"]["modules"][i]["items"][j]
@@ -41,9 +59,7 @@ class Command(BaseCommand):
                             name=product_name,
                             defaults={
                                 "brand": brand_name,
-                                "category": (
-                                    "top" if response == results[0] else "bottom"
-                                ),
+                                "category": category,
                                 "price": price,
                                 "image_url": image_url,
                             },
