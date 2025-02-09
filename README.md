@@ -10,11 +10,27 @@ KAKAO_CLIENT_SECRET_ID=your_kakao_client_secret_id_key
 
 ### API 예시
 
-### 기본 요청
+#### 기본 요청
 ```
 GET /api/v1/...
-Authorization: Bearer YOUR_JWT_TOKEN
+Authorization: Bearer YOUR_ACCESS_TOKEN
 ```
+
+#### Authentication
+
+```
+GET /api/v1/auth/kakao/login/
+
+{"kakao_auth_url": "https://..."}
+```
+
+```
+GET /api/v1/auth/kakao/callback/?code=...
+
+{"refresh": "...", "access": "..."}
+```
+
+access 토큰과 같이 GET 요청을 보내면 된다
 
 #### Curation
 

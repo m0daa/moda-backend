@@ -32,6 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DEFAULT_CHARSET = "utf-8"
+
 
 # Application
 
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     "curation",
     "product",
     "like",
+    "search",
 ]
 
 MIDDLEWARE = [
