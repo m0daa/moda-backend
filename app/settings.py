@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-*f@2oyuj2+1=^r*+g70#(f+m#1a7ch=j1o-svy(lv0eh5_oso5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["overall-doreen-moda-backend-a0ad675c.koyeb.app"]
 
 DEFAULT_CHARSET = "utf-8"
 
