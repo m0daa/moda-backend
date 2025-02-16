@@ -15,6 +15,7 @@ django-ninja-jwt = "^5.3.5"
 python-dotenv = "^1.0.1"
 aiohttp = "^3.11.11"
 gunicorn = "^23.0.0"
+uvicorn = "^0.34.0"
 
 
 [build-system]
