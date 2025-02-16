@@ -17,4 +17,4 @@ class Like(models.Model):
         unique_together = ("user", "curation")
 
     def __str__(self):
-        return f"{self.user.first_name}님이 {self.curation.title}를 좋아합니다"
+        return f"{self.user.name}님이 {self.curation.title}를 좋아합니다"

@@ -6,7 +6,7 @@ from ninja_jwt.authentication import JWTAuth
 from product.models import Product
 from product.schemas import ProductSchema
 
-router = Router()
+router = Router(auth=JWTAuth)
 
 
 @router.get("/")
