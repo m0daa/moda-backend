@@ -19,7 +19,7 @@ ENV PATH="/root/.local/bin:${PATH}"
 COPY pyproject.toml poetry.lock ./
 
 # 의존성 설치
-RUN poetry install
+RUN poetry install --no-root
 
 # 프로젝트 소스 코드 복사
 COPY . .
